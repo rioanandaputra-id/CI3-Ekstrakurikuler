@@ -94,24 +94,6 @@
 <?php
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 elseif ($_GET[act] == 'tambah') {
   if (isset($_POST[tambah])) {
     $dir_gambar = 'file_lomba/';
@@ -216,68 +198,6 @@ $ekstrakurikuler = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul WHERE kode_e
               </div>
             </form>
             </div>";}
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   elseif ($_GET[act] == 'vedit') {
 
@@ -431,6 +351,7 @@ elseif ($_GET[act] == 'detail') {
   $dir_gambar = 'file_lomba/';
   $det = mysqli_query($koneksi, "SELECT p.*, e.nama_ekskul FROM tbl_ekskul_lomba p LEFT JOIN tbl_ekskul e ON p.kode_ekskul = e.kode_ekskul WHERE p.kode_ekskul_lomba = '$_GET[id]'");
   $s = mysqli_fetch_array($det);
+  
   echo "<div class='col-md-12'>
               <div class='box box-info'>
                 <div class='box-header with-border'>
@@ -455,16 +376,108 @@ elseif ($_GET[act] == 'detail') {
                   </table>
                 </div>
               </div><div class='box-footer'>";
-$data = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul WHERE kode_pegawai = '$_SESSION[id]'");
-$ss = mysqli_fetch_array($data);
+              $data = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul WHERE kode_pegawai = '$_SESSION[id]'");
+              $ss = mysqli_fetch_array($data);
 
- if ($_SESSION[level] == '1' || $s[kode_ekskul] == $ss[kode_ekskul]) {
+               if ($_SESSION[level] == '1' || $s[kode_ekskul] == $ss[kode_ekskul]) {
 
               
-              echo "<a class='btn btn-primary' title='Ubah' href='?view=jadwallomba&act=vedit&id=$s[kode_ekskul_lomba]'>Ubah</a>";
+              echo "<a class='btn btn-warning' title='Ubah' href='?view=jadwallomba&act=vedit&id=$s[kode_ekskul_lomba]'>Ubah</a>";
+              }
+
+if ($_SESSION[level] == '1' || $_SESSION[level] == 'siswa' || $s[kode_ekskul] == $ss[kode_ekskul]) {        
+echo "<a href='index.php?view=jadwallomba&act=daftarlomba&id=$_GET[id]'><button type='button' class='btn btn-primary pull-left'>Mendaftar</button></a>";
 }
+
                    echo "<a href='index.php?view=jadwallomba'><button type='button' class='btn btn-default pull-right'>Kembali</button></a> 
               </div></form>
-            </div>";
-}
+            </div></div>";
 ?>
+
+            <div class='col-md-12'>
+              <div class='box box-info'>
+                <div class='box-header with-border'>
+                  <h3 class='box-title'>Siswa Terdaftar Perlombaan</h3>
+                </div>
+              <div class='box-body'>
+
+
+
+                  <table class='table table-condensed table-bordered'>
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>NISN</th>
+                      <th>NAMA</th>
+                      <th>KELAS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php  $no =1;
+                    $datalomsis = mysqli_query($koneksi, "SELECT b.*, c.* FROM `tbl_ekskul_lomba_daftar` LEFT JOIN tbl_siswa b ON b.kode_siswa = tbl_ekskul_lomba_daftar.kode_siswa LEFT JOIN tbl_ekskul_lomba c ON c.kode_ekskul_lomba = tbl_ekskul_lomba_daftar.kode_ekskul_lomba WHERE c.kode_ekskul_lomba=$_GET[id]");
+                    while($lomsi = mysqli_fetch_array($datalomsis)){
+                    ?>
+
+                    <tr>
+                      <td><?= $no; ?></td>
+                      <td><?= $lomsi['nisn'] ?></td>
+                      <td><?= $lomsi['nama'] ?></td>
+                      <?php
+                      $datacls= mysqli_query($koneksi,"SELECT a.nama_kelas, b.nama_jurusan FROM `tbl_kelas` a LEFT JOIN tbl_jurusan b ON b.kode_jurusan = a.kode_jurusan WHERE a.kode_kelas = $lomsi[kode_kelas]");
+                      $cls = mysqli_fetch_array($datacls);
+                      ?>
+                      <td><?= $cls['nama_kelas'] ?> - <?= $cls['nama_jurusan'] ?></td>
+                    </tr>
+
+                    <?php $no++;} ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <?php }
+
+  elseif($_GET[act]=='daftarlomba'){
+  if (isset($_POST[daftarlomba])){
+    $sql = "INSERT INTO `tbl_ekskul_lomba_daftar` (`kode_ekskul_lomba`, `kode_siswa`) VALUES ('$_GET[id]', '$_POST[a]');";
+    mysqli_query($koneksi,$sql);
+    echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[id]';</script>";
+  }
+
+    echo "<div class='col-md-12'>
+              <div class='box box-info'>
+                <div class='box-header with-border'>
+                  <h3 class='box-title'>Pendaftaran Lomba</h3>
+                </div>
+                <div class='box-body'>
+                <form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>
+                              <tr><th scope='row'>Nama Siswa</th> <td><select class='form-control' name='a'> 
+                              <option value='0' selected>- Pilih Siswa -</option>"; 
+
+                              if ($_SESSION['level'] == 'siswa') {
+                                $siswa = mysqli_query($koneksi,"SELECT * FROM tbl_siswa WHERE kode_siswa = '$_SESSION[id]'");
+                              } else {
+                              $siswa = mysqli_query($koneksi,"SELECT * FROM tbl_siswa");
+                              }
+                              while($a = mysqli_fetch_array($siswa)){
+                                echo "<option value='$a[kode_siswa]'>$a[nisn] - $a[nama]</option>";
+                                                                              }
+
+                      $datakg= mysqli_query($koneksi,"SELECT * FROM `tbl_ekskul_lomba` WHERE kode_ekskul_lomba = '$_GET[id]'");
+                      $kg = mysqli_fetch_array($datakg);
+                       
+                       echo "</select></td></tr>
+                       <tr><th scope='row'>Nama Kegiatan Lomba</th> <td>  </td><input class='form-control' disabled value='$kg[nama_kegiatan]'></tr>
+
+                       <br>
+                       <button type='submit' name='daftarlomba' class='btn btn-primary'>Mendaftar Lomba</button>
+                       <a href='index.php?view=jadwallomba&act=detail&id=$_GET[id]'><button type='button' class='btn btn-default pull-right'>Kembali</button></a> 
+
+                       </form>
+
+                       
+
+                </div>
+            </div>
+        </div>";
+} ?>

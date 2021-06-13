@@ -45,7 +45,12 @@
                   </li>
                   <li class="user-footer">
                     <div class="pull-left">
+                      <?php 
+                        if ($_SESSION[level]=='siswa'){?>
+                      <a target='_BLANK' href='cetak.php?idd=<?=$_SESSION[id]?>'><button type='button' class='btn btn-default pull-left'>Cetak Kartu Anggota</button></a>
+                    <?php } else {?>
                       <a href="index.php" class="btn btn-default btn-flat">Dashboard</a>
+                    <?php }?>
                     </div>
                     <div class="pull-right">
                       <?php 

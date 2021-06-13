@@ -264,8 +264,8 @@ echo "</tr>
                                   echo "<img class='img-thumbnail' style='width:155px' src='$sss[foto]'>";
                                 }
 
-$data = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul WHERE kode_pegawai = '$_SESSION[id]'");
-$s = mysqli_fetch_array($data);
+                          $data = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul WHERE kode_pegawai = '$_SESSION[id]'");
+                          $s = mysqli_fetch_array($data);
 
 
                                 if ($_SESSION[level] == '1' || $sss[kode_ekskul] == $s[kode_ekskul]) {
@@ -290,8 +290,17 @@ $s = mysqli_fetch_array($data);
 
                     </div>
                 </div>
-                  <div class='box-footer'>
-                    <a href='index.php?view=paskibra'><button type='button' class='btn btn-default pull-right'>Kembali</button></a>
+                  <div class='box-footer'>";
+
+                  if ($_SESSION['id'] == $sss[kode_siswa] || $_SESSION[level] == '1' || $sss[kode_ekskul] == $s[kode_ekskul]) {
+
+                  echo "
+                  <a target='_BLANK' href='cetak.php?idd=$sss[kode_siswa]'><button type='button' class='btn btn-primary pull-left'>Cetak Kartu Anggota</button></a>
+                  ";
+
+                  }
+
+                  echo "<a href='index.php?view=paskibra'><button type='button' class='btn btn-default pull-right'>Kembali</button></a>
             </div>";
 
 

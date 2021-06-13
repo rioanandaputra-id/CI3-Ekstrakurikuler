@@ -5,7 +5,17 @@ if ($_SESSION['id'] == '') {
 } else {
 
 include "config/koneksi.php";
-$detail_1 = mysqli_query($koneksi,"SELECT * FROM `tbl_ekskul_siswa` a LEFT JOIN tbl_siswa b ON a.kode_siswa = b.kode_siswa LEFT JOIN tbl_ekskul_jabatan c ON a.kode_ekskul_jabatan=c.kode_ekskul_jabatan LEFT JOIN tbl_ekskul d ON a.kode_ekskul=d.kode_ekskul LEFT JOIN tbl_kelamin e ON b.kode_kelamin = e.kode_kelamin where a.kode_ekskul_siswa='$_GET[id]'");
+
+// if ($_GET['id'] != '') {
+
+// $detail_1 = mysqli_query($koneksi,"SELECT * FROM `tbl_ekskul_siswa` a LEFT JOIN tbl_siswa b ON a.kode_siswa = b.kode_siswa LEFT JOIN tbl_ekskul_jabatan c ON a.kode_ekskul_jabatan=c.kode_ekskul_jabatan LEFT JOIN tbl_ekskul d ON a.kode_ekskul=d.kode_ekskul LEFT JOIN tbl_kelamin e ON b.kode_kelamin = e.kode_kelamin where a.kode_ekskul_siswa='$_GET[id]'");
+
+// } else {
+
+$detail_1 = mysqli_query($koneksi,"SELECT * FROM `tbl_ekskul_siswa` a LEFT JOIN tbl_siswa b ON a.kode_siswa = b.kode_siswa LEFT JOIN tbl_ekskul_jabatan c ON a.kode_ekskul_jabatan=c.kode_ekskul_jabatan LEFT JOIN tbl_ekskul d ON a.kode_ekskul=d.kode_ekskul LEFT JOIN tbl_kelamin e ON b.kode_kelamin = e.kode_kelamin where b.kode_siswa='$_GET[idd]'");
+
+// }
+
 $detail_2 = mysqli_query($koneksi,"SELECT * FROM identitas_sekolah");
 $sekolah = mysqli_fetch_array($detail_2);
 $siswa = mysqli_fetch_array($detail_1);

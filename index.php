@@ -5,6 +5,7 @@ include "config/koneksi.php";
 include "config/library.php";
 include "config/fungsi_indotgl.php";
 include "config/fungsi_seo.php";
+
 if (isset($_SESSION[id])) {
   
 
@@ -494,7 +495,17 @@ else {
   </html>
 
 <?php
-} else {
-  include "login.php";
 }
+
+elseif ($_GET['view'] == '') {
+  include 'landing_page.php';
+}
+
+elseif ($_GET['view'] == 'login') {
+  include 'login.php';
+}
+
+//  else {
+//   include "login.php";
+// }
 ?>

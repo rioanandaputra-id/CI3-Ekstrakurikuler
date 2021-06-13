@@ -82,11 +82,11 @@ if (isset($_POST[login])){
   $siswa = mysqli_query($koneksi, "SELECT * FROM tbl_siswa WHERE username='".$_POST[a]."' AND password='$pass'");
 
 
-  echo $hitungadmin = mysqli_num_rows($admin);
-  echo $hitungguru = mysqli_num_rows($guru);
-  echo $hitungpembina = mysqli_num_rows($pembina);
-  echo $hitungkajur = mysqli_num_rows($kajur);
-  echo $hitungsiswa = mysqli_num_rows($siswa);
+$hitungadmin = mysqli_num_rows($admin);
+$hitungguru = mysqli_num_rows($guru);
+$hitungpembina = mysqli_num_rows($pembina);
+$hitungkajur = mysqli_num_rows($kajur);
+$hitungsiswa = mysqli_num_rows($siswa);
 
 
   if ($hitungadmin >= 1){
@@ -96,7 +96,13 @@ if (isset($_POST[login])){
     $_SESSION[level]    = $r[kode_jabatan];
     include "config/user_agent.php";
     mysqli_query($koneksi,"INSERT INTO users_aktivitas VALUES('','$r[kode_pegawai]','$ip','$user_browser $version','$user_os','$r[kode_jabatan]','".date('H:i:s')."','".date('Y-m-d')."')");
+
+    if ($_GET['lomba'] != '') {
+      echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[lomba]';</script>";
+    } else {
     echo "<script>document.location='index.php';</script>";
+    }
+    
   }
   elseif ($hitungguru >= 1){
     $r = mysqli_fetch_array($guru);
@@ -105,7 +111,11 @@ if (isset($_POST[login])){
     $_SESSION[level]    = $r[kode_jabatan];
     include "config/user_agent.php";
     mysqli_query($koneksi,"INSERT INTO users_aktivitas VALUES('','$r[kode_pegawai]','$ip','$user_browser $version','$user_os','$r[kode_jabatan]','".date('H:i:s')."','".date('Y-m-d')."')");
+    if ($_GET['lomba'] != '') {
+      echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[lomba]';</script>";
+    } else {
     echo "<script>document.location='index.php';</script>";
+    }
   }
   elseif ($hitungpembina >= 1){
     $r = mysqli_fetch_array($pembina);
@@ -114,7 +124,11 @@ if (isset($_POST[login])){
     $_SESSION[level]    = $r[kode_jabatan];
     include "config/user_agent.php";
     mysqli_query($koneksi,"INSERT INTO users_aktivitas VALUES('','$r[kode_pegawai]','$ip','$user_browser $version','$user_os','$r[kode_jabatan]','".date('H:i:s')."','".date('Y-m-d')."')");
+    if ($_GET['lomba'] != '') {
+      echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[lomba]';</script>";
+    } else {
     echo "<script>document.location='index.php';</script>";
+    }
   }
   elseif ($hitungkajur >= 1){
     $r = mysqli_fetch_array($kajur);
@@ -123,7 +137,11 @@ if (isset($_POST[login])){
     $_SESSION[level]    = $r[kode_jabatan];
     include "config/user_agent.php";
     mysqli_query($koneksi,"INSERT INTO users_aktivitas VALUES('','$r[kode_pegawai]','$ip','$user_browser $version','$user_os','$r[kode_jabatan]','".date('H:i:s')."','".date('Y-m-d')."')");
+    if ($_GET['lomba'] != '') {
+      echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[lomba]';</script>";
+    } else {
     echo "<script>document.location='index.php';</script>";
+    }
   }
   elseif ($hitungsiswa >= 1){
     $r = mysqli_fetch_array($siswa);
@@ -134,7 +152,11 @@ if (isset($_POST[login])){
     $_SESSION[level]    = 'siswa';
     include "config/user_agent.php";
     mysqli_query($koneksi,"INSERT INTO users_aktivitas VALUES('','$r[kode_siswa]','$ip','$user_browser $version','$user_os','siswa','".date('H:i:s')."','".date('Y-m-d')."')");
+    if ($_GET['lomba'] != '') {
+      echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[lomba]';</script>";
+    } else {
     echo "<script>document.location='index.php';</script>";
+    }
   }else{
     echo "<script>window.alert('Maaf, Anda Tidak Memiliki akses');
                                   window.location=('index.php?view=login')</script>";
