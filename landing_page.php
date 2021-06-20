@@ -16,6 +16,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
+
+  <link href="dist/swiper/swiper-bundle.min.css" rel="stylesheet"> 
+  <script src="dist/swiper/swiper-bundle.min.js"></script> 
+
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
@@ -69,12 +73,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-lg">
 
 
-            <div class="card">
+            <div class="card card-primary card-outline">
               <div class="card-header">
                 <h5 class="card-title m-0"><b>Selamat Datang!</b></h5>
               </div>
               <div class="card-body">
                 <p class="card-text">Sistem Informasi Ekstrakulikuler (SI-EKSKUL) adalah sebuah platform berbasis website untuk manajemen data Ekstrakulikuler.</p>
+
+    <!-- ======= Hero Section ======= -->
+      <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+
+          <div class="row gy-4">
+
+            <div class="col-lg">
+              <div class="portfolio-details-slider swiper-container">
+                <div class="swiper-wrapper align-items-center">
+                  
+                  <div class="swiper-slide">
+                    <img src="foto_landingpage/1.png" height="500px" width="100%" alt="">
+                  </div>
+
+                  <!-- KALO MAU TAMBAH GAMBAR SLIDE COPY DARI SINI -->
+                  <div class="swiper-slide">
+                    <img src="foto_landingpage/2.jpg" height="500px" width="100%" alt="">
+                  </div>
+                  <!-- SAMPE SINI MASUKIN NAMA GAMBARNYA (GAMBARNYA DITARO FOLDER foto_landingpage) -->
+
+
+                  </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <!-- End Hero -->
+
               </div>
             </div>
 
@@ -89,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <input type="hidden" name='view' value='jadwallomba'>
                     <select name='ekskul' style='padding:4px; margin-right:5px;'>
                         <?php  
-                            echo "<option value=''>- Filter ekskul</option>";
+                            echo "<option value='all'>- Filter ekskul</option>";
                             $ekskul = mysqli_query($koneksi,"SELECT * FROM tbl_ekskul");
                             while ($k = mysqli_fetch_array($ekskul)){
                               if ($_GET[ekskul]==$k[kode_ekskul]){
@@ -126,10 +161,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </thead>
           <tbody>
             <?php $no = 1;
-            if ($_GET['ekskul'] != 'all') {
-              $tampil = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba a LEFT JOIN tbl_ekskul b ON a.kode_ekskul = b.kode_ekskul WHERE a.kode_ekskul = '$_GET[ekskul]' ORDER BY a.tgl_daftar DESC");  
-            } else {
+            if ($_GET['ekskul'] == 'all' || $_GET['ekskul'] == '') {
               $tampil = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba a LEFT JOIN tbl_ekskul b ON a.kode_ekskul = b.kode_ekskul ORDER BY a.tgl_daftar DESC");
+            } else {
+              $tampil = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba a LEFT JOIN tbl_ekskul b ON a.kode_ekskul = b.kode_ekskul WHERE a.kode_ekskul = '$_GET[ekskul]' ORDER BY a.tgl_daftar DESC");  
             }
             
 
@@ -193,5 +228,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="https://adminlte.io/themes/v3/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="https://adminlte.io/themes/v3/dist/js/demo.js"></script>
+  <script src="dist/js/main-aaa.js"></script> 
+
 </body>
 </html>

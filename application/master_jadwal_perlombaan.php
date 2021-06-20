@@ -439,9 +439,19 @@ echo "<a href='index.php?view=jadwallomba&act=daftarlomba&id=$_GET[id]'><button 
 
   elseif($_GET[act]=='daftarlomba'){
   if (isset($_POST[daftarlomba])){
+
+    $sqlcek = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba_daftar WHERE kode_ekskul_lomba = '$_GET[id]' AND kode_siswa = '$_POST[a]'");
+    $hitung = mysqli_num_rows($sqlcek);
+
+    if ($hitung >= 1) {
+      echo "<script>alert('Siswa Sudah Terdaftar di Lomba Ini!');</script>";
+      echo"<script>window.history.back();</script>";
+    } else {
+
     $sql = "INSERT INTO `tbl_ekskul_lomba_daftar` (`kode_ekskul_lomba`, `kode_siswa`) VALUES ('$_GET[id]', '$_POST[a]');";
     mysqli_query($koneksi,$sql);
     echo "<script>document.location='index.php?view=jadwallomba&act=detail&id=$_GET[id]';</script>";
+    }
   }
 
     echo "<div class='col-md-12'>
