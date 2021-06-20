@@ -126,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </thead>
           <tbody>
             <?php $no = 1;
-            if ($_GET['ekskul'] != '') {
+            if ($_GET['ekskul'] != 'all') {
               $tampil = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba a LEFT JOIN tbl_ekskul b ON a.kode_ekskul = b.kode_ekskul WHERE a.kode_ekskul = '$_GET[ekskul]' ORDER BY a.tgl_daftar DESC");  
             } else {
               $tampil = mysqli_query($koneksi, "SELECT * FROM tbl_ekskul_lomba a LEFT JOIN tbl_ekskul b ON a.kode_ekskul = b.kode_ekskul ORDER BY a.tgl_daftar DESC");

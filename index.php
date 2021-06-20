@@ -497,7 +497,7 @@ else {
 <?php
 }
 
-elseif ($_GET['view'] == '') {
+elseif ($_GET['view'] == '' || $_GET['ekskul'] != '') {
   include 'landing_page.php';
 }
 
